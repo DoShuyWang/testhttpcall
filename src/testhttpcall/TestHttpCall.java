@@ -15,19 +15,49 @@ import java.util.Map;
  */
 public class TestHttpCall {
 
+
+    @Test
+    public void testJosn() throws Exception {
+        JSONObject resultToken = JSONObject.fromObject("{\"RESULT\":\"SUCCESS\",\"TOKEN\":\"{\"29e574fd-b0ef-486f-b46f-d1c358d86741\":\"037175ca-f0a2-49ca-9621-647d0477aebf\",\"30b3e212-2821-4039-b711-40624201cbeb\":\"503e29bb-0a36-4d94-b00b-0ac4ac48d879\",\"b82ef1b0-1c51-4e4a-81e9-093acff22124\":\"54ebbdbe-d2be-44b6-9108-83b8c93c904b\",\"120fa233-bb79-4707-a088-7a72d0da89df\":\"a7fb6842-0af3-414c-8ed0-a3cd0c5616cb\"}\"}");
+        String tokens = (String) resultToken.get("TOKEN");
+        System.out.println(tokens);
+        JSONObject jsonTokens = JSONObject.fromObject(tokens);
+        String token = (String) jsonTokens.get("29e574fd-b0ef-486f-b46f-d1c358d86741");
+        System.out.println(token);
+    }
+
+
+    @Test
+    public void goHtt() throws Exception {
+        HttpCallService httpCallService = new HttpCallService();
+        Map map = new HashMap();
+        JSONObject json = new JSONObject();
+        json.put("CLIENTID", "29e574fd-b0ef-486f-b46f-d1c358d86741");
+        json.put("LOGON_NAME", "v_linhui");
+        json.put("SECRET", "t8l6rmmhlE+Q097JNTUxFQ9vdpvIyJtIwL5SWqrdD4M=");
+        json.put("PASSWD", "Y0yoHbN/fHv3/H/8lYUaoQ==");
+        json.put("ACCESS_CLIENTID", "30b3e212-2821-4039-b711-40624201cbeb,b82ef1b0-1c51-4e4a-81e9-093acff22124,120fa233-bb79-4707-a088-7a72d0da89df");
+        map.put("RequestParam", json.toString());
+        String ret = null;
+        ret = httpCallService.httpPost(map);
+        JSONObject resultToken = JSONObject.fromObject(ret);
+        System.out.println(resultToken);
+        JSONObject tokenJson = (JSONObject) resultToken.get("TOKEN");
+    }
+
     @Test
     public void orgAdd() throws Exception {
         HttpCallService httpCallService = new HttpCallService();
         JSONObject json = new JSONObject();
         json.put("BUSI_CODE", "ORG_ADD");
         json.put("SP_DEPT_ID", "0000003");
-        json.put("DEPT_NAME", "IPS测试_测试二个");
+        json.put("DEPT_NAME", "IPS测试_测试五个");
         json.put("CREATED_STAFF_ID", "SP_ORG_ID");
         json.put("SP_PARENT_DEPT_ID", "");
         json.put("SP_PARENT_DEPT_CODE", "");
         json.put("COMP_ID", "");
         json.put("COMP_CODE", "");
-        json.put("DEPT_CODE", "00000000");
+        json.put("DEPT_CODE", "000000003");
         json.put("DEPT_DESC", "1");
         json.put("DEPT_TYPE_ID", "2");
         json.put("DEPT_TYPE", "3");
@@ -68,11 +98,11 @@ public class TestHttpCall {
         HttpCallService httpCallService = new HttpCallService();
         JSONObject json = new JSONObject();
         json.put("BUSI_CODE", "ORG_EDIT");
-        json.put("SP_DEPT_ID", "测试兼职的机构");
-        json.put("DEPT_NAME", "测试兼职的机构123");
-        json.put("UPDATED_STAFF_ID", "SP_ORG_ID");
+        json.put("SP_DEPT_ID", "0000003");
+        json.put("DEPT_NAME", "IPS测试_测试五个——修改444");
+        json.put("UPDATED_STAFF_ID", "");
         json.put("SP_PARENT_ODEPT_ID", "");
-        json.put("DEPT_CODE", "测试兼职的机构");
+        json.put("DEPT_CODE", "0000003");
         json.put("DEPT_DESC", "2");
         json.put("DEPT_TYPE_ID", "1");
         json.put("DEPT_TYPE", "3");
@@ -89,7 +119,7 @@ public class TestHttpCall {
         HttpCallService httpCallService = new HttpCallService();
         JSONObject json = new JSONObject();
         json.put("BUSI_CODE", "ORG_DEL");
-        json.put("SP_DEPT_ID", "SP_ORG_ID");
+        json.put("SP_DEPT_ID", "0000003");
         Map map = new HashMap();
         map.put("requestParam", json.toString());
         String ret = httpCallService.httpPost(map);

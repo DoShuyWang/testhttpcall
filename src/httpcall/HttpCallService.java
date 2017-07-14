@@ -15,6 +15,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.Set;
 
 public class HttpCallService {
 
-    private String url = "http://127.0.0.1:8081/idm/restclient";
+    private String url = "http://127.0.0.1:8082/isso/rest/oauth/imlogon";
     private String clientUserName = "6777b1df-e5ce-43b0-8cd7-b2acf7ede08a";
     private String clientPassword = "UJxCosnw6glKtyeEy0I6yTlFje9olo7uKDxu+6O2Hcg=";
     private int connectionRequestTimeout = 9999;
@@ -58,7 +59,7 @@ public class HttpCallService {
     public HttpCallService() {
     }
 
-    public String httpGet() throws Exception {
+    public String httpGet(String url) throws Exception {
         HttpGet httpGet = null;
         InputStreamReader is = null;
         BufferedReader br = null;
@@ -139,7 +140,7 @@ public class HttpCallService {
             String auth = clientUserName + ":" + clientPassword;
             byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
             String authHeader = "Basic Njc3N2IxZGYtZTVjZS00M2IwLThjZDctYjJhY2Y3ZWRlMDhhOlVKeENvc253NmdsS3R5ZUV5MEk2eVRsRmplOW9sbzd1S0R4dSs2TzJIY2c9";
-            httpPost.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
+            //httpPost.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
 
             httpPost.setEntity(new UrlEncodedFormEntity(params, Consts.UTF_8));
             CloseableHttpResponse response = httpclient.execute(httpPost);
